@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void initFrame() {
-		frame = new JFrame("Game #1");
+		frame = new JFrame("Amor Fati");
 		frame.add(this);
 		frame.pack();
 		frame.setResizable(true);
