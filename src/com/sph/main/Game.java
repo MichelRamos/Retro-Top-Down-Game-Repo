@@ -8,8 +8,14 @@ import java.awt.Graphics;
 //import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
+
+import com.sph.entities.Entity;
+import com.sph.entities.Player;
+import com.sph.graficos.Spritesheet;
 
 public class Game extends Canvas implements Runnable{
 
@@ -26,14 +32,24 @@ public class Game extends Canvas implements Runnable{
 	
 	private BufferedImage image;
 	
+	public List<Entity> entities;
+	public Spritesheet spritesheet;
+	
 	public Game() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		initFrame();
+		// starting obj
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		entities = new ArrayList<Entity>();
+		spritesheet = new Spritesheet("/adventurer-run-right.png");
+		
+		//Player player = new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36));
+		//entities.add(player); //this is not good
+		entities.add(new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36))); //this is better for now
 	}
 	
 	public void initFrame() {
-		frame = new JFrame("Amor Fati");
+		frame = new JFrame("Game #1");
 		frame.add(this);
 		frame.pack();
 		frame.setResizable(true);
@@ -58,7 +74,13 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void tick() {
-		
+		for(int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			if(e instanceof Player) {
+				//tick on player
+			}
+			e.tick();
+		}
 	}
 	
 	public void render() {
@@ -71,7 +93,12 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(new Color(0, 0, 0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
+		//rendering obj
 		//Graphics2D g2 = (Graphics2D) g;
+		for(int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			e.render(g);
+		}
 		
 		g.dispose();
 		g = bs.getDrawGraphics();
