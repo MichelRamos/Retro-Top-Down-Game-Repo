@@ -5,6 +5,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 //import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -17,7 +19,7 @@ import com.sph.entities.Entity;
 import com.sph.entities.Player;
 import com.sph.graficos.Spritesheet;
 
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,8 +36,10 @@ public class Game extends Canvas implements Runnable{
 	
 	public List<Entity> entities;
 	public Spritesheet spritesheet;
+	private Player player;
 	
 	public Game() {
+		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		initFrame();
 		// starting obj
@@ -45,11 +49,13 @@ public class Game extends Canvas implements Runnable{
 		
 		//Player player = new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36));
 		//entities.add(player); //this is not good
-		entities.add(new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36))); //this is better for now
+		//entities.add(new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36))); //also not good
+		player = new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36)); //much better
+		entities.add(player); //here comes a new player
 	}
 	
 	public void initFrame() {
-		frame = new JFrame("Game #1");
+		frame = new JFrame("Amor Fati");
 		frame.add(this);
 		frame.pack();
 		frame.setResizable(true);
@@ -108,6 +114,7 @@ public class Game extends Canvas implements Runnable{
 	
 	
 	public void run() {
+		requestFocus(); //requisita o foco para a janela do jogo, EXTREMAMENTE NECESSÁRIO!
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -141,6 +148,42 @@ public class Game extends Canvas implements Runnable{
 	public static void main (String[] args) {
 		Game game = new Game();
 		game.start();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			player.right = true;
+		}else if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			player.left = true;
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+			player.up = true;
+		}else if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			player.down = true;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			player.right = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			player.left = false;
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+			player.up = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			player.down = false;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
