@@ -1,0 +1,12 @@
+- Artes para o jogo/sprites (player, , npc, enemies, items, tiles).
+- Sistema de animação para o player.
+- Controle do jogo pelo teclado.
+- Sistema de ataque.
+- Criação de mapas.
+- Mudança de leveis/fases.
+- Inimigos no jogo (boss battle).
+- Coletar items.
+- Aumentar ataque e defesa de acordo com o item.
+- Sistema de dano.
+- Start, Save, Load, Pause, Game Over.
+- Audio.

@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	private BufferedImage image;
 	
 	public List<Entity> entities;
-	public Spritesheet spritesheet;
+	public static Spritesheet spritesheet;
 	private Player player;
 	
 	public Game() {
@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 		// starting obj
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
-		spritesheet = new Spritesheet("/adventurer-run-right.png");
+		spritesheet = new Spritesheet("/adventurer-run-spritesheet.png");
 		
 		//Player player = new Player(0, 0, 16, 16, spritesheet.getSprite(0, 0, 36, 36));
 		//entities.add(player); //this is not good
